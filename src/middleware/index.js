@@ -2,6 +2,7 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+// const cors = require('koa2-cors')
 
 const cors = require('./corsRequest')
 const responseHandler = require('./responseHandler')
@@ -12,6 +13,21 @@ module.exports = app => {
   onerror(app)
 
   // middlewares
+  // app.use(cors({
+  //   origin: '*',
+  //   exposeHeaders: [
+  //     'Origin',
+  //     'X-Requested-With',
+  //     'Content-Type',
+  //     'Accept',
+  //     'Authorization',
+  //     'a'
+  //   ],
+  //   maxAge: 5,
+  //   redentials: true,
+  //   allowMethods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+  //   allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'a'],
+  // }))
   app.use(cors())
   app.use(bodyparser({
     enableTypes:['json', 'form', 'text']
