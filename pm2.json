@@ -1,0 +1,24 @@
+{
+  "name": "koa-demo",
+  "script": "./bin/www",
+  "cwd": "./",
+  "watch": [
+    "bin",
+    "config",
+    "src"
+  ],
+  "ignore_watch": [
+    "node_modules",
+    "logs"
+  ],
+  "merge_logs": true,
+  "log_date_format": "YYYY-MM-DD HH:mm Z",
+  "instances": 1,
+  "exec_mode"  : "cluster_mode",
+  "autorestart": true,
+  "error_file" : "./logs/app-err.log",
+  "out_file"   : "./logs/app-out.log",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
