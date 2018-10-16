@@ -2,9 +2,11 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-// const cors = require('koa2-cors')
 
 const cors = require('./corsRequest')
+const jwtKoa = require('koa-jwt')
+const secret = require('../config').token
+
 const responseHandler = require('./responseHandler')
 
 module.exports = app => {
@@ -12,23 +14,17 @@ module.exports = app => {
   // error handler
   onerror(app)
 
-  // middlewares
-  // app.use(cors({
-  //   origin: '*',
-  //   exposeHeaders: [
-  //     'Origin',
-  //     'X-Requested-With',
-  //     'Content-Type',
-  //     'Accept',
-  //     'Authorization',
-  //     'a'
-  //   ],
-  //   maxAge: 5,
-  //   redentials: true,
-  //   allowMethods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-  //   allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'a'],
-  // }))
   app.use(cors())
+
+  // 过滤不用jwt验证
+  app.use(jwtKoa({ secret, debug: true }).unless({
+    path: [
+      /^\/api\/v1\/open/,
+      /^\/test/,
+      /^\/api\/v1\/user\/info/,
+    ]
+  }))
+
   app.use(bodyparser({
     enableTypes:['json', 'form', 'text']
   }))

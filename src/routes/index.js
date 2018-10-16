@@ -3,13 +3,12 @@ const V1 = require('./v1')
 const V2 = require('./v2')
 
 const router = new Router()
-router.get('/', (ctx, next) => {
-  ctx.res.ok({
-    message: 'hello word'
-  })
+
+router.get('/test', (ctx, next) => {
+  ctx.body = 'hello'
 })
 
-router.use('/v1/api', V1.routes(), V1.allowedMethods())
-router.use('/v2/api', V2.routes(), V2.allowedMethods())
+router.use('/api/v1', V1.routes(), V1.allowedMethods())
+router.use('/api/v2', V2.routes(), V2.allowedMethods())
 
 module.exports = router

@@ -1,6 +1,7 @@
 const router = require('koa-router')()
-const IndexController = require('../controller/index')
+const OauthController = require('../controller/oauth')
 
-router.get('/index', IndexController.index)
+router.post('/open/signin', OauthController.signin)
+router.get('/user/info', OauthController.verify)
 
 module.exports = router
