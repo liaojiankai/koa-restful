@@ -8,12 +8,16 @@ const findUser = async({username, password}) => {
   return username === 'user' && password === '123456'
 }
 
-module.exports = class oauth {
+const checkToken = async(username) => {
+  return username === 'user'
+}
+
+module.exports = class Token {
   static async signin(ctx, next) {
     const { username, password } = ctx.request.body
     const isExist = await findUser({username, password})
     if(isExist) {
-      const token = jwt.sign({username}, secret, { expiresIn })
+      const token = jwt.sign({ username }, secret, { expiresIn })
       ctx.body = token
       return
     }
@@ -22,17 +26,16 @@ module.exports = class oauth {
 
   static async verify(ctx, next) {
     const token = ctx.get('authorization')
-    ctx.body = ctx
-    // if(token) {
-    //   try {
-    //     ctx.body = token
-    //     // const payload = await verify(token.spilt(' '[1], secret))
-    //     // ctx.body = payload
-    //   } catch (error) {
-    //     ctx.status = 401
-    //   }
-    // } else {
-    //   ctx.status = 400
-    // }
+    if(token) {
+      try {
+        const payload = await verify(token.split(' ')[1], secret)
+        const isTrue = await checkToken(payload.username)
+        ctx.body = isTrue
+      } catch (error) {
+        ctx.status = 401
+      }
+    } else {
+      ctx.status = 400
+    }
   }
 }

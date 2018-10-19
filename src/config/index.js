@@ -3,4 +3,5 @@ module.exports = {
   mongoConf: require('./db'),
   qiniu: require('./qiniu'),
   token: require('./token'),
+  corsConf: require('./cors')
 }

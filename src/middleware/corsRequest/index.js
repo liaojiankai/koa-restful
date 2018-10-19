@@ -1,36 +1,19 @@
-const IGNORE_DOMAIN = [
-  'localhost',
-  '127.0.0.1'
-]
-// 域名白名单
-const whitelistOrigin = [
-]
-
-//
-const Expose_Headers = [
-
-]
-
-const Allow_Headers = [
-  'Origin',
-  'X-Requested-With',
-  'Content-Type',
-  'Accept',
-  'Authorization'
-]
+const { corsConf } = require('../../config')
+const { IGNORE_DOMAIN, whitelistOrigin, Expose_Headers, Allow_Headers } = corsConf
 
 const isContained = (minArr, maxArr) => minArr.every(i => maxArr.some(o => o === i))
 const firstWordUpperCase = (str) => str.toLowerCase().replace(/(\-|^)[a-z]/g, (char) => char.toUpperCase())
 const NODE_ENV = process.env.NODE_ENV
-module.exports = () => async(ctx, next) => {
 
+module.exports = () => async(ctx, next) => {
   const origin = ctx.get('Origin')
   const flag = whitelistOrigin.some(i => origin.indexOf(i) > -1)
   if(NODE_ENV === 'development') {
-    ctx.set('Access-Control-Allow-Origin', '*')
+    // ctx.set('Access-Control-Allow-Origin', '*')
+    ctx.set('Access-Control-Allow-Origin', ctx.get('Origin'))
   } else {
     if(flag) {
-      ctx.set('Access-Control-Allow-Origin', whitelistOrigin.join(', '))
+      ctx.set('Access-Control-Allow-Origin', origin)
     } else {
       ctx.status = 400
       return
@@ -49,6 +32,7 @@ module.exports = () => async(ctx, next) => {
     if(isContain) {
       ctx.set('Access-Control-Allow-Headers', preflightHeader.join(', '))
       ctx.status = 204
+      return
     } else {
       ctx.status = 400
       return

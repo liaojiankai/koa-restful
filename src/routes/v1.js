@@ -1,7 +1,8 @@
 const router = require('koa-router')()
-const OauthController = require('../controller/oauth')
+const TokenController = require('../controller/token')
 
-router.post('/open/signin', OauthController.signin)
-router.get('/user/info', OauthController.verify)
+// Auth
+router.get('/auth/verify', TokenController.verify)
+router.post('/auth/signin', TokenController.signin)
 
 module.exports = router
