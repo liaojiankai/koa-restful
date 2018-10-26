@@ -1,6 +1,6 @@
 const log4js = require('log4js')
 
-const asscess = require('./access')
+const access = require('./access')
 
 const methods = ['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'mark']
 const baseInfo = {

@@ -1,0 +1,53 @@
+[2018-10-26T17:08:40.098] [ERROR] error - { method: 'GET',
+  url: '/test',
+  body: {},
+  costTime: '0ms',
+  err: Error: test error~
+    at router.get (C:\Users\Administrator\Desktop\koa2-demo\src\routes\index.js:7:9)
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-compose\index.js:44:32)
+    at next (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-compose\index.js:45:18)
+    at C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-router\lib\router.js:346:16
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-compose\index.js:44:32)
+    at C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-compose\index.js:36:12
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-router\lib\router.js:351:31)
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at app.use (C:\Users\Administrator\Desktop\koa2-demo\src\middleware\index.js:70:13)
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at C:\Users\Administrator\Desktop\koa2-demo\src\middleware\responseHandler\index.js:158:11
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at logger (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-logger\index.js:50:12)
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at filter (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-json\index.js:25:12)
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa\node_modules\koa-compose\index.js:42:32),
+  userAgent: undefined }
+[2018-10-26T17:09:00.841] [ERROR] error - { method: 'GET',
+  url: '/test',
+  body: {},
+  costTime: '4ms',
+  err: Error: test error~
+    at router.get (C:\Users\Administrator\Desktop\koa2-demo\src\routes\index.js:7:9)
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-compose\index.js:44:32)
+    at next (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-compose\index.js:45:18)
+    at C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-router\lib\router.js:346:16
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-compose\index.js:44:32)
+    at C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-compose\index.js:36:12
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-router\lib\router.js:351:31)
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at app.use (C:\Users\Administrator\Desktop\koa2-demo\src\middleware\index.js:70:13)
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at C:\Users\Administrator\Desktop\koa2-demo\src\middleware\responseHandler\index.js:158:11
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at logger (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-logger\index.js:50:12)
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at filter (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa-json\index.js:25:12)
+    at dispatch (C:\Users\Administrator\Desktop\koa2-demo\node_modules\koa\node_modules\koa-compose\index.js:42:32),
+  userAgent: 
+   { host: 'localhost:3001',
+     connection: 'keep-alive',
+     'cache-control': 'max-age=0',
+     'upgrade-insecure-requests': '1',
+     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.33 Safari/537.36',
+     accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+     'accept-encoding': 'gzip, deflate, br',
+     'accept-language': 'zh-CN,zh;q=0.9',
+     cookie: 'Webstorm-c7ae48fb=631a5077-c1fb-4d25-a790-cdd15abd15ad; Hm_lvt_3f3e1f036736d6b5f9036d5d768f2d55=1536649384,1539162873' } }
