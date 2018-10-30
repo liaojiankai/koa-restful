@@ -4,7 +4,7 @@ const V1 = require('./v1')
 const router = new Router()
 
 router.get('/test', (ctx, next) => {
-  throw new Error('test error~')
+  // ctx.throw(404)
   ctx.body = 'hello'
 })
 

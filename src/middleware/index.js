@@ -20,20 +20,27 @@ module.exports = app => {
   // error handler
   onerror(app)
 
-  app.use(function (ctx, next) {
-    return next().catch((err) => {
-      console.log('err: ', err)
-      if (err.status === 401) {
-        ctx.status = 401;
-        ctx.body = err.originalError ? err.originalError.message : err.message
+  app.use(async (ctx, next) => {
+    const start = new Date()
+    let ms
+    await next().then(() => {
+      ms = new Date() - start
+      console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+      Log4js.resLogger(ctx, ms)
+      // 记录响应日志
+    }).catch((err) => {
+      ms = new Date() - start
+      if (err.status) {
+        ctx.body = err
+        ctx.status = err.status
+        // 记录响应日志
+        Log4js.badRequest(ctx, ms)
       } else {
-        if (isDev) {
-          ctx.status = 500
-          ctx.body = err
-        } else {
-          ctx.status = 500
-          ctx.body = 'Server internal exception!'
-        }
+        ctx.status = 500
+        ctx.body = err.originalError ? err.originalError.message : err.message || 'Server internal exception'
+        console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+        //记录异常日志
+        Log4js.errLogger(ctx, err, `${ms}ms`)
       }
     })
   })
@@ -45,15 +52,17 @@ module.exports = app => {
   app.use(cors())
 
   // 过滤不用jwt验证
-  // app.use(jwtKoa({ secret }).unless({
-  //   // path: [...jwtKoaUnlessPath]
-  //   path: [
-  //     /^\/favicon.ico/,
-  //     /^\/test/,
-  //     /^\/open/,
-  //     /^\api\/v1\/auth\/signin/,
-  //   ]
-  // }))
+  app.use(jwtKoa({
+    secret
+  }).unless({
+    // path: [...jwtKoaUnlessPath]
+    path: [
+      /^\/favicon.ico/,
+      /^\/test/,
+      /^\/open/,
+      /^\api\/v1\/auth\/signin/,
+    ]
+  }))
 
   app.use(json())
   app.use(logger())
@@ -61,25 +70,6 @@ module.exports = app => {
   // app.use(require('koa-static')(__dirname + '../public'))
 
   app.use(responseHandler())
-
-  // logger
-  app.use(async (ctx, next) => {
-    const start = new Date()
-    let ms
-    try {
-      await next()
-      ms = new Date() - start
-      console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-      //记录响应日志
-      Log4js.resLogger(ctx, ms)
-      // Log4js.cacheLogger(ctx, ms)
-    } catch (error) {
-      ms = new Date() - start
-      console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-      //记录异常日志
-      Log4js.errLogger(ctx, error, `${ms}ms`)
-    }
-  })
 
   app.on('error', (err, ctx) => {
     console.log(err)

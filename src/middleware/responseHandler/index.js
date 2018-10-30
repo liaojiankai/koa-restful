@@ -22,10 +22,15 @@ const statusCodes = {
 
 function responseHandler() {
   return async (ctx, next) => {
+    console.log(ctx.res.ok)
     ctx.res.statusCodes = statusCodes;
     ctx.statusCodes = ctx.res.statusCodes;
 
-    ctx.res.success = ({ statusCode, data = null, message = null }) => {
+    ctx.res.success = ({
+      statusCode,
+      data = null,
+      message = null
+    }) => {
       const status = 'success';
 
       if (!!statusCode && (statusCode < 400))
@@ -33,10 +38,19 @@ function responseHandler() {
       else if (!(ctx.status < 400))
         ctx.status = statusCodes.OK;
 
-      ctx.body = { status, data, message };
+      ctx.body = {
+        status,
+        data,
+        message
+      };
     };
 
-    ctx.res.fail = ({ statusCode, code, data = null, message = null }) => {
+    ctx.res.fail = ({
+      statusCode,
+      code,
+      data = null,
+      message = null
+    }) => {
       const status = 'fail';
 
       if (!!statusCode && (statusCode >= 400 && statusCode < 500))
@@ -44,10 +58,20 @@ function responseHandler() {
       else if (!(ctx.status >= 400 && ctx.status < 500))
         ctx.status = statusCodes.BAD_REQUEST;
 
-      ctx.body = { status, code, data, message };
+      ctx.body = {
+        status,
+        code,
+        data,
+        message
+      };
     };
 
-    ctx.res.error = ({ statusCode, code, data = null, message = null }) => {
+    ctx.res.error = ({
+      statusCode,
+      code,
+      data = null,
+      message = null
+    }) => {
       const status = 'error';
 
       if (!!statusCode && (statusCode >= 500 && statusCode < 600))
@@ -55,7 +79,12 @@ function responseHandler() {
       else if (!(ctx.status >= 500 && ctx.status < 600))
         ctx.status = statusCodes.INTERNAL_SERVER_ERROR;
 
-      ctx.body = { status, code, data, message };
+      ctx.body = {
+        status,
+        code,
+        data,
+        message
+      };
     };
 
     ctx.res.ok = (params = {}) => {

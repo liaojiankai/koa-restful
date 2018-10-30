@@ -1,9 +1,5 @@
 const path = require('path')
 
-//响应日志输出完整路径
-const errorLogPath = path.resolve(__dirname, '../../../log/error')
-//错误日志输出完整路径
-const responseLogPath = path.resolve(__dirname, '../../../log/response')
 const baseLogPath = path.resolve(__dirname, '../../../log')
 
 module.exports = {
@@ -26,20 +22,11 @@ module.exports = {
       maxLogSize: 104800,
       backups: 100
     },
-    cache: {
-      type: 'dateFile',
-      category: 'cacheLogger',
-      filename: `${baseLogPath}/cache/`,
-      pattern: 'yyyy-MM-dd.log',
-      alwaysIncludePattern: true,
-      maxLogSize: 104800,
-      backups: 100
-    }
   },
   categories: {
     error: {
       appenders: ['error'],
-      level: 'error'
+      level: 'warn'
     },
     response: {
       appenders: ['response'],
@@ -50,5 +37,7 @@ module.exports = {
       level: 'info'
     }
   },
-  replaceConsole: false
+  // pm2: true,
+  // pm2InstanceVar: 'INSTANCE_ID',
+  disableClustering: true
 }

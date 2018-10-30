@@ -19,6 +19,7 @@ const checkToken = async (username) => {
 }
 
 module.exports = class Token {
+
   static async signin(ctx, next) {
     const {
       username,

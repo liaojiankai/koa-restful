@@ -1,6 +1,6 @@
-const path = require('path')
 const log4js = require('log4js')
 const log4jsConfig = require('./config.js')
+
 const {
   formatError,
   formatRes
@@ -9,17 +9,17 @@ const {
 //加载配置文件
 log4js.configure(log4jsConfig)
 
+const errorLogger = log4js.getLogger('error')
+const resLogger = log4js.getLogger('response')
+const badRequest = log4js.getLogger('badRequest')
 
-let errorLogger = log4js.getLogger('error')
-let resLogger = log4js.getLogger('response')
-let cacheLogger = log4js.getLogger('cache')
-
+exports.resLogger = log4js.getLogger('response')
 
 module.exports = class Logger {
 
   static errLogger(ctx, error, resTime) {
     if (ctx && error) {
-      errorLogger.error(formatError(ctx, error, resTime))
+      errorLogger.warn(formatError(ctx, error, resTime))
     }
   }
 
@@ -27,7 +27,7 @@ module.exports = class Logger {
     resLogger.info(formatRes(ctx, resTime))
   }
 
-  static cacheLogger() {
-    cacheLogger.error(formatRes(ctx, resTime))
+  static badRequest(ctx, resTime) {
+    badRequest.fatal(formatRes(ctx, resTime))
   }
 }
